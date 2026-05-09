@@ -7,7 +7,7 @@ from unittest.mock import patch
 from pathlib import Path
 
 
-from data.database import initialize_db
+from data.database import * #importing everything from database for testing purposes, allows access to helper functions like row_to_creature without needing to import the whole service layer
 from entity.creature import Creature
 #unittests for database interactions like saving and loading creatures
 
@@ -48,10 +48,44 @@ class TestDatabase(unittest.TestCase):
             table = cursor.fetchone()
             self.assertIsNotNone(table)
 
-    # def test_save_and_load_creature(self):
-        
-    #     pass
+    def test_save_and_load_creature(self):
+        c = self.make_creature()
+        save_creature(c)
+        row = load_creature()
+        self.assertIsNotNone(row)
+        self.assertEqual(row["name"], c.name)
+        self.assertEqual(row["species"], c.species)
+        self.assertEqual(row["age"], c.age)
+        self.assertEqual(row["energy"], c.energy)
+        self.assertEqual(row["fullness"], c.fullness)
+        self.assertEqual(row["happiness"], c.happiness)
 
-    # def test_row_to_creature(self):
-    #     # This test would involve creating a mock database row and ensuring that the row_to_creature function correctly converts it into a Creature object.
-    #     pass
+    def test_none_returned_when_no_creature(self):
+        row = load_creature()
+        self.assertIsNone(row)
+
+    def test_save_overwrites_existing(self):
+        c = self.make_creature(energy=80)
+        save_creature(c)
+        c.energy = 50
+        save_creature(c)
+        row = load_creature()
+        self.assertEqual(row["energy"], 50)
+
+    def test_delete_creature(self):
+        c = self.make_creature()
+        save_creature(c)
+        delete_creature()
+        row = load_creature()
+        self.assertIsNone(row)
+
+    def test_row_to_creature(self):
+        c = self.make_creature()
+        save_creature(c)
+        row = load_creature()
+        loaded = row_to_creature(row)
+        self.assertIsInstance(loaded, Creature)
+        self.assertEqual(loaded.name, "Testy")
+        self.assertEqual(loaded.species, "TestSpecies")
+        self.assertEqual(loaded.energy, 80)
+        self.assertEqual(loaded.fullness, 90)

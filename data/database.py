@@ -4,9 +4,11 @@ import os
 from entity.creature import Creature
 from datetime import datetime
 
+DB_PATH = './data/creature.db'
+
 # connects to db or creates it if it doesn't exist
 def get_connection():
-    conn = sqlite3.connect('./data/creature.db')
+    conn = sqlite3.connect(DB_PATH)
     return conn
 
 def initialize_db():

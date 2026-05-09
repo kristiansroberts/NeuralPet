@@ -29,7 +29,7 @@ As you interact with the pet, prompts are being sent behind the scenes to the ll
     - Linux: `sudo apt install build-essential`
 
 git clone https://github.com/kristiansroberts/neural_pet
-cd neural_pet
+cd NeuralPet
 uv sync
 
 Place the gwen-2.5-1.5b-instruct-q4_k_m.gguf file into the models folder
@@ -53,6 +53,8 @@ There are a few known limitations and obstacles:
 
 
 ## Roadmap
+- Linux and Windows packages
+
 - Web application implementation
 
 - Significantly more in depth keyword matching and local intent parsing to allow for faster engagement

@@ -67,7 +67,6 @@ def parse_command(text):
 
 def llm_intent_parse(text, known_tricks, llm): # for allowing the llm to determine user intent. the primary reason to use an llm in the first place
     tricks_str = ", ".join(known_tricks)
-    print(f"[DEBUG] tricks_str: {tricks_str}")
     prompt = f"""Known tricks: {tricks_str}
 
 Classify this message into one of:
@@ -87,7 +86,6 @@ Message: {text}"""
             temperature=0.0,
         )
         raw = out["choices"][0]["message"]["content"].strip()
-        print(f"[DEBUG] llm raw output: {raw}")
         data = json.loads(raw)
         return {
             "intent": data.get("intent", "chat"),
@@ -96,6 +94,7 @@ Message: {text}"""
         }
     except Exception:
         return {"intent": "chat", "confidence": 0.0, "trick": None}
+
 def run_action(creature, intent, text):
     if intent == "feed":
         return creature.feed()
@@ -108,7 +107,6 @@ def run_action(creature, intent, text):
         return creature.teach_trick(trick)
     if intent == "perform":
         trick_name = extract_trick_name(text, creature.known_tricks)
-        print(f"[DEBUG] perform trick_name: {trick_name}, known_tricks: {creature.known_tricks}")
         return creature.perform_trick(trick_name)
     if intent == "status":
         return {"success": True, "reason": "status_only"}
@@ -138,7 +136,6 @@ def apply_user_input(creature, user_input):
     llm = get_llm()
     llm_parsed = llm_intent_parse(text, creature.known_tricks, llm)
     
-    print(f"[DEBUG] llm_parsed: {llm_parsed}")
     if llm_parsed["intent"] != "chat":
         action_result = run_action(creature, llm_parsed["intent"], text)
         return {"intent": llm_parsed["intent"], "action_result": action_result, "user_text_for_llm": text}

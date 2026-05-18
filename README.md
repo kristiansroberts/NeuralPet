@@ -1,10 +1,13 @@
 # **Neural Pet**
 Say hello to your **Neural Pet**! Neural Pet emulates a tamagachi-style pet using an LLM
 at the core of its structure! Put simply the LLM _is_ the pet. The goal of this project is to incorporate an existing llm into a program written around it, allowing it to be used in a specific way that is not just as a standard chat bot. The current iteration is a cli tool, but has the wiring and structure to be ran as a web application. 
+ 
+### Motivation
+I wanted to build an LLM application that felt alive, while using an existing LLM. Right now, most implementations mimic generic chatbots. I wanted to see if I could constrain an existing LLM, a small model at that, to drive a consistent, stateful character. The outcome is a CLI pet that is ready to be ported to the web, that does in fact achieve that goal.
 
 
 ## Features:
-Your interactions with your pet can be just like any you would have with your actual dog or cat. However, it need not be a dog or cat; it can be a parrot, a horse, or even a baby dragon! You can feed it, play with it, teach it tricks and perform those tricks. Like any pet, it will need to be fed as well as stimulated. If it goes too many days with out food it will get really hungry and really sad.
+Your interactiocns with your pet can be just like any you would have with your actual dog or cat. However, it need not be a dog or cat; it can be a parrot, a horse, or even a baby dragon! You can feed it, play with it, teach it tricks and perform those tricks. Like any pet, it will need to be fed as well as stimulated. If it goes too many days with out food it will get really hungry and really sad.
 
 ## Technical:
 Neuro Pet utilizes a few specific important technologies in the tech stack to make it work. The program itself is written in python with llama-cpp and huggingface-hub. It uses SQLite for saving all of the important creature data. And most importantly the program uses the GGUF model **gwen-2.5-1.5b-instruct-q4_k_m.gguf** from the open-source machine learning hub Hugging Face. 
@@ -28,6 +31,7 @@ As you interact with the pet, prompts are being sent behind the scenes to the ll
 - Llama CPP-Python needs a C++ compiler:
     - Linux: `sudo apt install build-essential`
 
+#### Quick Start
 git clone https://github.com/kristiansroberts/neural_pet
 cd NeuralPet
 uv sync
@@ -59,7 +63,12 @@ There are a few known limitations and obstacles:
 
 - Significantly more in depth keyword matching and local intent parsing to allow for faster engagement
 
+## Contributing
+Before contributing, please follow the requirement and quick start quide, and make sure all depencies are installed.
 
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
 
 ## Author
 
